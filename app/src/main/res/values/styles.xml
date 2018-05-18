@@ -1,0 +1,28 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">serif</item>
+        <!-- Customization of the action bar -->
+        <item name="actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="titleTextStyle">@style/MyTitleTextStyle</item>
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/smaller_texts</item>
+        <item name="android:paddingBottom">@dimen/smaller_padding</item>
+    </style>
+
+</resources>
