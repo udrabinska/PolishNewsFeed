@@ -7,6 +7,7 @@
     android:padding="@dimen/standard_padding">
 
     <TextView
+        android:id="@+id/title_view"
         style="@style/textStyle"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/title_text"
@@ -19,27 +20,31 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/author_view"
             style="@style/textStyle"
             tools:text="Daniel Boffey in Brussels" />
 
         <TextView
             style="@style/textStyle"
-            tools:text=" || " />
+            android:text="@string/divider" />
 
         <TextView
+            android:id="@+id/date_view"
             style="@style/textStyle"
             tools:text="14.05.2018" />
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/image_view"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/smaller_padding"
         android:contentDescription="@string/image_description"
         android:scaleType="centerCrop"
         tools:background="@color/colorAccent" />
 
     <TextView
+        android:id="@+id/trailer_view"
         style="@style/textStyle"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/lead_text"
