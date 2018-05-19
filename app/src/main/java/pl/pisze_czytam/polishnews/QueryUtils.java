@@ -45,7 +45,7 @@ public final class QueryUtils {
         try  {
             url = new URL(requestUrl);
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Problem with building URL ", e);
+            Log.e(LOG_TAG, "Problem with building URL.", e);
         }
         return url;
     }
@@ -70,7 +70,7 @@ public final class QueryUtils {
                 jsonResponse = readFromStream(inputStream);
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the JSON results with news", e);
+            Log.e(LOG_TAG, "Problem retrieving the JSON results with news.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -125,6 +125,25 @@ public final class QueryUtils {
                 newsList.add(new News(title, author, date, trailer, url, image));
             }
 
+            JSONArray leadNewsArray = response.optJSONArray("leadContent");
+            for (int i = 0; i < leadNewsArray.length(); i++) {
+                JSONObject news = leadNewsArray.optJSONObject(i);
+                String title = news.optString("webTitle");
+                String date = news.optString("webPublicationDate");
+                String url = news.optString("webUrl");
+                JSONObject fields = news.optJSONObject("fields");
+                String author = fields.optString("byline");
+                String trailer = fields.optString("trailText");
+                String imageUrl = fields.optString("thumbnail");
+                Drawable image = null;
+                try {
+                    Bitmap bitmap = getBitmapFromURL(imageUrl);
+                    image = new BitmapDrawable(Resources.getSystem(), bitmap);
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
+                }
+                newsList.add(new News(title, author, date, trailer, url, image));
+            }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem with parsing news JSON results.", e);
         }
