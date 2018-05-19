@@ -39,6 +39,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
             holder.date = newsItem.findViewById(R.id.date_view);
             holder.image = newsItem.findViewById(R.id.image_view);
             holder.trailer = newsItem.findViewById(R.id.trailer_view);
+            newsItem.setTag(holder);
         } else {
             holder = (ViewHolder) newsItem.getTag();
         }

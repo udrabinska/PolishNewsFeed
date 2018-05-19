@@ -10,7 +10,7 @@ public class News {
     private String url;
     private Drawable image;
 
-    public News(String title, String author, String date, String trailer, String url, Drawable image){
+    public News(String title, String author, String date, String trailer, String url, Drawable image) {
         this.title = title;
         this.author = author;
         this.date = date;
@@ -19,10 +19,10 @@ public class News {
         this.image = image;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
-    public String getAuthor(){
+    public String getAuthor() {
         return author;
     }
     public String getDate() {

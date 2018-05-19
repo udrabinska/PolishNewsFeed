@@ -2,4 +2,6 @@
     <string name="app_name">Polish News</string>
     <string name="divider">&#160;&#160;||&#160;&#160;</string>
     <string name="image_description">article\'s thumbnail</string>
+    <string name="no_internet">No internet connection. I cannot load news.</string>
+    <string name="no_news">No news about Poland found.</string>
 </resources>
