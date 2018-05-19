@@ -21,6 +21,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public final class QueryUtils {
@@ -146,6 +148,23 @@ public final class QueryUtils {
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem with parsing news JSON results.", e);
+        }
+        // sort recent news ("results") and lead content by date
+        Collections.sort(newsList, new Comparator<News>() {
+            public int compare(News n1, News n2) {
+                return n1.getDate().compareTo(n2.getDate());
+            }
+        });
+        Collections.reverse(newsList);
+
+        // Check if news from results aren't the same as from leadContent. If yes, delete duplicate one.
+        for (int i = 0; i < newsList.size() - 1; i++) {
+            while (newsList.get(i).getTitle().equals(newsList.get(i + 1).getTitle())) {
+                newsList.remove(i + 1);
+                if (i == newsList.size() - 1) {
+                    break;
+                }
+            }
         }
         return newsList;
     }
