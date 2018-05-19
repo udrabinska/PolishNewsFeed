@@ -27,6 +27,7 @@ import java.util.List;
 
 public final class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
+    private static ArrayList<News> newsList = new ArrayList<>();
 
     private QueryUtils() {
     }
@@ -102,56 +103,13 @@ public final class QueryUtils {
         if (TextUtils.isEmpty(newsJson)) {
             return null;
         }
-        ArrayList<News> newsList = new ArrayList<>();
         try {
             JSONObject rootObject = new JSONObject(newsJson);
             JSONObject response = rootObject.optJSONObject("response");
-            JSONArray newsArray = response.optJSONArray("results");
-
-            for (int i = 0; i < newsArray.length(); i++) {
-                JSONObject news = newsArray.optJSONObject(i);
-                String title = news.optString("webTitle");
-                String date = news.optString("webPublicationDate");
-                String[] parts = date.split("T");
-                date = parts[0];
-                String url = news.optString("webUrl");
-                JSONObject fields = news.optJSONObject("fields");
-                String author = fields.optString("byline");
-                String trailer = fields.optString("trailText");
-                trailer = cleanTrailer(trailer);
-                String imageUrl = fields.optString("thumbnail");
-                Drawable image = null;
-                try {
-                    Bitmap bitmap = getBitmapFromURL(imageUrl);
-                    image = new BitmapDrawable(Resources.getSystem(), bitmap);
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
-                }
-                newsList.add(new News(title, author, date, trailer, url, image));
-            }
-
-            JSONArray leadNewsArray = response.optJSONArray("leadContent");
-            for (int i = 0; i < leadNewsArray.length(); i++) {
-                JSONObject news = leadNewsArray.optJSONObject(i);
-                String title = news.optString("webTitle");
-                String date = news.optString("webPublicationDate");
-                String[] parts = date.split("T");
-                date = parts[0];
-                String url = news.optString("webUrl");
-                JSONObject fields = news.optJSONObject("fields");
-                String author = fields.optString("byline");
-                String trailer = fields.optString("trailText");
-                trailer = cleanTrailer(trailer);
-                String imageUrl = fields.optString("thumbnail");
-                Drawable image = null;
-                try {
-                    Bitmap bitmap = getBitmapFromURL(imageUrl);
-                    image = new BitmapDrawable(Resources.getSystem(), bitmap);
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
-                }
-                newsList.add(new News(title, author, date, trailer, url, image));
-            }
+            JSONArray resultsArray = response.optJSONArray("results");
+            JSONArray leadContentArray = response.optJSONArray("leadContent");
+            getThroughArray(resultsArray);
+            getThroughArray(leadContentArray);
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem with parsing news JSON results.", e);
         }
@@ -175,6 +133,29 @@ public final class QueryUtils {
         return newsList;
     }
 
+    private static void getThroughArray(JSONArray jsonArray) {
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject news = jsonArray.optJSONObject(i);
+            String title = news.optString("webTitle");
+            String date = news.optString("webPublicationDate");
+            String[] parts = date.split("T");
+            date = parts[0];
+            String url = news.optString("webUrl");
+            JSONObject fields = news.optJSONObject("fields");
+            String author = fields.optString("byline");
+            String trailer = fields.optString("trailText");
+            trailer = cleanTrailer(trailer);
+            String imageUrl = fields.optString("thumbnail");
+            Drawable image = null;
+            try {
+                Bitmap bitmap = getBitmapFromURL(imageUrl);
+                image = new BitmapDrawable(Resources.getSystem(), bitmap);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
+            }
+            newsList.add(new News(title, author, date, trailer, url, image));
+        }
+    }
     private static Bitmap getBitmapFromURL(String imageUrl) throws IOException {
         HttpURLConnection connection = null;
         InputStream input = null;
