@@ -44,7 +44,7 @@ public final class QueryUtils {
 
     private static URL createUrl(String requestUrl) {
         URL url = null;
-        try  {
+        try {
             url = new URL(requestUrl);
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Problem with building URL.", e);
@@ -112,10 +112,13 @@ public final class QueryUtils {
                 JSONObject news = newsArray.optJSONObject(i);
                 String title = news.optString("webTitle");
                 String date = news.optString("webPublicationDate");
+                String[] parts = date.split("T");
+                date = parts[0];
                 String url = news.optString("webUrl");
                 JSONObject fields = news.optJSONObject("fields");
                 String author = fields.optString("byline");
                 String trailer = fields.optString("trailText");
+                trailer = cleanTrailer(trailer);
                 String imageUrl = fields.optString("thumbnail");
                 Drawable image = null;
                 try {
@@ -132,10 +135,13 @@ public final class QueryUtils {
                 JSONObject news = leadNewsArray.optJSONObject(i);
                 String title = news.optString("webTitle");
                 String date = news.optString("webPublicationDate");
+                String[] parts = date.split("T");
+                date = parts[0];
                 String url = news.optString("webUrl");
                 JSONObject fields = news.optJSONObject("fields");
                 String author = fields.optString("byline");
                 String trailer = fields.optString("trailText");
+                trailer = cleanTrailer(trailer);
                 String imageUrl = fields.optString("thumbnail");
                 Drawable image = null;
                 try {
@@ -192,5 +198,11 @@ public final class QueryUtils {
                 input.close();
             }
         }
+    }
+    private static String cleanTrailer(String trailer) {
+        if (trailer.contains("<")) {
+            return trailer.replaceAll("<[^>]*>", "");
+        }
+        return trailer;
     }
 }
