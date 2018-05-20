@@ -146,7 +146,7 @@ public final class QueryUtils {
             String[] titleParts = title.split(" [|]");
             title = titleParts[0];
 
-            // get date and cut off time
+            // get date and reformat it
             String date = news.optString("webPublicationDate");
             try {
                 date = changeFormatDateToPolish(date);

@@ -40,7 +40,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
 
-
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
