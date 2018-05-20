@@ -20,10 +20,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public final class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
@@ -136,15 +140,33 @@ public final class QueryUtils {
     private static void getThroughArray(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject news = jsonArray.optJSONObject(i);
+
+            // get title and cut it before author (when he's added to title)
             String title = news.optString("webTitle");
+            String[] titleParts = title.split(" [|] ");
+            title = titleParts[0];
+
+            // get date and cut off time
             String date = news.optString("webPublicationDate");
-            String[] parts = date.split("T");
-            date = parts[0];
+            try {
+                date = changeFormatDateToPolish(date);
+            } catch (ParseException e) {
+                Log.e(LOG_TAG, "Problem with changing data.", e);
+            }
+
             String url = news.optString("webUrl");
+
             JSONObject fields = news.optJSONObject("fields");
+            // get author; if it is empty, add "Author unknown"
             String author = fields.optString("byline");
+            if (author.isEmpty()) {
+                author = "Author unknown";
+            }
+
+            // get trailer and clean it from html tags
             String trailer = fields.optString("trailText");
             trailer = cleanTrailer(trailer);
+
             String imageUrl = fields.optString("thumbnail");
             Drawable image = null;
             try {
@@ -169,7 +191,7 @@ public final class QueryUtils {
             input = connection.getInputStream();
             return BitmapFactory.decodeStream(input);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem with getting bitmap form URL.", e);
+            Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
             return null;
         } finally {
             if (connection != null) {
@@ -186,4 +208,12 @@ public final class QueryUtils {
         }
         return trailer;
     }
+
+    private static String changeFormatDateToPolish(String givenDate) throws ParseException {
+        SimpleDateFormat baseFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
+        SimpleDateFormat newFormat = new SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.GERMAN);
+        Date dateValue = baseFormat.parse(givenDate);
+        return newFormat.format(dateValue);
+    }
+
 }
