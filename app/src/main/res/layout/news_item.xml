@@ -7,6 +7,12 @@
     android:padding="@dimen/standard_padding">
 
     <TextView
+        android:id="@+id/section_view"
+        style="@style/textStyle"
+        android:textColor="@color/colorAccent"
+        tools:text="Opinion" />
+
+    <TextView
         android:id="@+id/title_view"
         style="@style/textStyle"
         android:textColor="@color/colorPrimaryDark"
@@ -31,7 +37,7 @@
         <TextView
             android:id="@+id/date_view"
             style="@style/textStyle"
-            tools:text="14.05.2018" />
+            tools:text="14.05.2018, 13:02" />
     </LinearLayout>
 
     <ImageView

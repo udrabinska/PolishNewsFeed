@@ -153,7 +153,7 @@ public final class QueryUtils {
             } catch (ParseException e) {
                 Log.e(LOG_TAG, "Problem with changing data.", e);
             }
-
+            String section = news.optString("sectionName");
             String url = news.optString("webUrl");
 
             JSONObject fields = news.optJSONObject("fields");
@@ -175,7 +175,7 @@ public final class QueryUtils {
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
             }
-            newsList.add(new News(title, author, date, trailer, url, image));
+            newsList.add(new News(title, author, date, section, trailer, url, image));
         }
     }
     private static Bitmap getBitmapFromURL(String imageUrl) throws IOException {
@@ -211,7 +211,7 @@ public final class QueryUtils {
 
     private static String changeFormatDateToPolish(String givenDate) throws ParseException {
         SimpleDateFormat baseFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
-        SimpleDateFormat newFormat = new SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.GERMAN);
+        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy.MM.dd, HH:mm", Locale.GERMAN);
         Date dateValue = baseFormat.parse(givenDate);
         return newFormat.format(dateValue);
     }

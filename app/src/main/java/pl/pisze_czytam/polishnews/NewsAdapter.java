@@ -26,6 +26,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
             private TextView title;
             private TextView author;
             private TextView date;
+            private TextView section;
             private ImageView image;
             private TextView trailer;
         }
@@ -37,6 +38,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
             holder.title = newsItem.findViewById(R.id.title_view);
             holder.author = newsItem.findViewById(R.id.author_view);
             holder.date = newsItem.findViewById(R.id.date_view);
+            holder.section = newsItem.findViewById(R.id.section_view);
             holder.image = newsItem.findViewById(R.id.image_view);
             holder.trailer = newsItem.findViewById(R.id.trailer_view);
             newsItem.setTag(holder);
@@ -48,6 +50,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         holder.title.setText(currentNews.getTitle());
         holder.author.setText(currentNews.getAuthor());
         holder.date.setText(currentNews.getDate());
+        holder.section.setText(currentNews.getSection());
         holder.image.setImageDrawable(currentNews.getImage());
         holder.trailer.setText(currentNews.getTrailer());
 
