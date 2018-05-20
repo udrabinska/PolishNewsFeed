@@ -10,6 +10,7 @@
         android:id="@+id/section_view"
         style="@style/textStyle"
         android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         tools:text="Opinion" />
 
     <TextView

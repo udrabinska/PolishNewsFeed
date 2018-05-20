@@ -143,7 +143,7 @@ public final class QueryUtils {
 
             // get title and cut it before author (when he's added to title)
             String title = news.optString("webTitle");
-            String[] titleParts = title.split(" [|] ");
+            String[] titleParts = title.split(" [|]");
             title = titleParts[0];
 
             // get date and cut off time
@@ -157,11 +157,9 @@ public final class QueryUtils {
             String url = news.optString("webUrl");
 
             JSONObject fields = news.optJSONObject("fields");
-            // get author; if it is empty, add "Author unknown"
+            // get author; if it is empty, add "Author unknown"; cut before "in" (when added)
             String author = fields.optString("byline");
-            if (author.isEmpty()) {
-                author = "Author unknown";
-            }
+            author = formatAuthor(author);
 
             // get trailer and clean it from html tags
             String trailer = fields.optString("trailText");
@@ -215,5 +213,14 @@ public final class QueryUtils {
         Date dateValue = baseFormat.parse(givenDate);
         return newFormat.format(dateValue);
     }
-
+    private static String formatAuthor(String author) {
+        if (author.isEmpty()) {
+            author = "Author unknown";
+        }
+        if (author.contains(" in ")) {
+            String[] cutAuthor = author.split(" in ");
+            author = cutAuthor[0];
+        }
+        return author;
+    }
 }
