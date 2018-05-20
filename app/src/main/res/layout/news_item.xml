@@ -44,7 +44,7 @@
     <ImageView
         android:id="@+id/image_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/image_size"
         android:layout_marginBottom="@dimen/smaller_padding"
         android:contentDescription="@string/image_description"
         android:scaleType="centerCrop"

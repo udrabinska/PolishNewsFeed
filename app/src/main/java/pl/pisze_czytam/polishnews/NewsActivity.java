@@ -21,8 +21,6 @@ import java.util.List;
 public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>> {
     String requestWithoutKey = "https://content.guardianapis.com/world/poland?page-size=20&show-fields=trailText,byline,thumbnail&";
     String apiKey = BuildConfig.ApiKey;
-    /** since API key is private, to run app please change "BuildConfig.ApiKey" to your API key
-     * or "api-key=test" **/
     private final String REQUEST_URL = requestWithoutKey + apiKey;
     ListView newsList;
     TextView emptyView;
