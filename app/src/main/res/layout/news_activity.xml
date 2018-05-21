@@ -14,31 +14,18 @@
         android:orientation="vertical"
         android:padding="@dimen/smaller_padding" />
 
-    <LinearLayout
+    <TextView
         android:id="@+id/empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerInParent="true">
-        <ImageView
-            android:id="@+id/empty_image"
-            android:layout_width="@dimen/wifi_image"
-            android:layout_height="@dimen/wifi_image"
-            android:contentDescription="@string/image_no_wifi"
-            android:layout_gravity="center"
-            tools:src="@drawable/scan_wifi" />
-
-        <TextView
-            android:id="@+id/empty_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="@dimen/standard_padding"
-            android:textSize="@dimen/title_text"
-            android:textStyle="bold"
-            tools:text="@string/no_news" />
-    </LinearLayout>
+        android:layout_centerInParent="true"
+        android:drawablePadding="@dimen/standard_padding"
+        android:gravity="center"
+        android:padding="@dimen/standard_padding"
+        android:textSize="@dimen/title_text"
+        android:textStyle="bold"
+        tools:drawableTop="@drawable/scan_wifi"
+        tools:text="@string/no_news" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

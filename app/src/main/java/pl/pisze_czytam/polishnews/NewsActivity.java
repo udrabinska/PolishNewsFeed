@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,9 +23,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     String apiKey = BuildConfig.ApiKey;
     private final String REQUEST_URL = requestWithoutKey + apiKey;
     ListView newsList;
-    LinearLayout emptyView;
-    TextView emptyText;
-    ImageView emptyImage;
+    TextView emptyView;
     ProgressBar progressBar;
     private NewsAdapter newsAdapter;
 
@@ -38,8 +34,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
 
         newsList = findViewById(R.id.list);
         emptyView = findViewById(R.id.empty_view);
-        emptyText = findViewById(R.id.empty_text);
-        emptyImage = findViewById(R.id.empty_image);
         progressBar = findViewById(R.id.progress_bar);
 
         newsList.setEmptyView(emptyView);
@@ -54,8 +48,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
             getLoaderManager().initLoader(0, null, this);
         } else {
             progressBar.setVisibility(View.GONE);
-            emptyText.setText(R.string.no_internet);
-            emptyImage.setImageDrawable(getResources().getDrawable(R.drawable.wifi_off));
+            emptyView.setText(R.string.no_internet);
+            emptyView.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.wifi_off), null, null);
         }
 
         newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,8 +69,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {
-        emptyText.setText(R.string.no_news);
-        emptyImage.setImageDrawable(getResources().getDrawable(R.drawable.scan_wifi));
+        emptyView.setText(R.string.no_news);
+        emptyView.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.scan_wifi), null, null);
         newsAdapter.clear();
 
         if (newsList != null && !newsList.isEmpty()) {
