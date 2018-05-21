@@ -1,59 +1,76 @@
 package pl.pisze_czytam.polishnews;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class NewsAdapter extends ArrayAdapter<News> {
-    public NewsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<News> objects) {
-        super(context, resource, objects);
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
+    private List<News> newsList;
+    final private ListItemClickListener onClickListener;
+
+    public interface ListItemClickListener {
+        void onListItemClicked(int position);
     }
 
-    @NonNull
+    public NewsAdapter(List<News> newsList, ListItemClickListener listener) {
+        this.newsList = newsList;
+        onClickListener = listener;
+    }
+
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View newsItem = convertView;
+    public NewsViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.news_item, viewGroup, false);
+        NewsViewHolder viewHolder = new NewsViewHolder(view);
+        return viewHolder;
+    }
 
-        class ViewHolder {
-            private TextView title;
-            private TextView author;
-            private TextView date;
-            private TextView section;
-            private ImageView image;
-            private TextView trailer;
-        }
-
-        ViewHolder holder;
-        if (convertView == null) {
-            newsItem = LayoutInflater.from(getContext()).inflate(R.layout.news_item, parent, false);
-            holder = new ViewHolder();
-            holder.title = newsItem.findViewById(R.id.title_view);
-            holder.author = newsItem.findViewById(R.id.author_view);
-            holder.date = newsItem.findViewById(R.id.date_view);
-            holder.section = newsItem.findViewById(R.id.section_view);
-            holder.image = newsItem.findViewById(R.id.image_view);
-            holder.trailer = newsItem.findViewById(R.id.trailer_view);
-            newsItem.setTag(holder);
-        } else {
-            holder = (ViewHolder) newsItem.getTag();
-        }
-
-        News currentNews = getItem(position);
+    @Override
+    public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+        News currentNews = newsList.get(position);
         holder.title.setText(currentNews.getTitle());
         holder.author.setText(currentNews.getAuthor());
         holder.date.setText(currentNews.getDate());
         holder.section.setText(currentNews.getSection());
         holder.image.setImageDrawable(currentNews.getImage());
         holder.trailer.setText(currentNews.getTrailer());
+    }
 
-        return newsItem;
+    @Override
+    public int getItemCount() {
+        return newsList.size();
+    }
+
+    class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView title;
+        private TextView author;
+        private TextView date;
+        private TextView section;
+        private ImageView image;
+        private TextView trailer;
+
+        public NewsViewHolder(View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.title_view);
+            author = itemView.findViewById(R.id.author_view);
+            date = itemView.findViewById(R.id.date_view);
+            section = itemView.findViewById(R.id.section_view);
+            image = itemView.findViewById(R.id.image_view);
+            trailer = itemView.findViewById(R.id.trailer_view);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            onClickListener.onListItemClicked(clickedPosition);
+        }
     }
 }
+
+
