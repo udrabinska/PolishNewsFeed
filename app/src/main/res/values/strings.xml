@@ -3,5 +3,5 @@
     <string name="divider">&#160;&#160;||&#160;&#160;</string>
     <string name="image_description">article\'s thumbnail</string>
     <string name="no_internet">No internet connection. I cannot load news.</string>
-    <string name="no_news">No news found. \nCheck internet connection and run the app again.</string>
+    <string name="no_news">No news found. \nCheck internet connection and run the app again.\n\n If the problem still occurs, wait till the Guardian\'s server works again.</string>
 </resources>
