@@ -111,9 +111,9 @@ public final class QueryUtils {
             JSONObject rootObject = new JSONObject(newsJson);
             JSONObject response = rootObject.optJSONObject("response");
             JSONArray resultsArray = response.optJSONArray("results");
-            JSONArray leadContentArray = response.optJSONArray("leadContent");
+//            JSONArray leadContentArray = response.optJSONArray("leadContent");
             getThroughArray(resultsArray);
-            getThroughArray(leadContentArray);
+//            getThroughArray(leadContentArray);
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem with parsing news JSON results.", e);
         }
