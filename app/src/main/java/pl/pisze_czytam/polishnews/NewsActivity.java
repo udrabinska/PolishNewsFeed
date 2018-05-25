@@ -4,11 +4,15 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,9 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>> {
-    String requestWithoutKey = "https://content.guardianapis.com/world/poland?page-size=20&show-fields=trailText,byline,thumbnail&";
+    String requestWithoutKey = "https://content.guardianapis.com/world/poland?show-fields=trailText,byline,thumbnail";
     String apiKey = BuildConfig.ApiKey;
-    private final String REQUEST_URL = requestWithoutKey + apiKey;
     ListView newsList;
     TextView emptyView;
     ProgressBar progressBar;
@@ -64,7 +67,17 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
-        return new NewsLoader(this, REQUEST_URL);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String newsNumber = sharedPreferences.getString(getString(R.string.news_number_key),
+                getString(R.string.news_number_default));
+
+        Uri baseUri = Uri.parse(requestWithoutKey);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("page-size", newsNumber);
+        uriBuilder.appendQueryParameter("api-key", apiKey);
+
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -82,5 +95,20 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
         newsAdapter.clear();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
