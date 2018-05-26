@@ -9,4 +9,11 @@
         android:selectAllOnFocus="true"
         android:title="@string/news_number_label" />
 
+    <SwitchPreference
+        android:id="@+id/lead_content_switch"
+        android:key="@string/lead_content_key"
+        android:summaryOff="@string/lead_content_unchecked"
+        android:summaryOn="@string/lead_content_checked"
+        android:title="@string/lead_content_label" />
+
 </PreferenceScreen>

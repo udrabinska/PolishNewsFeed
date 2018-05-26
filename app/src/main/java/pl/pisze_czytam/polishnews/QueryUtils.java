@@ -29,6 +29,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static pl.pisze_czytam.polishnews.SettingsActivity.leadContentChecked;
+
 public final class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
     private static ArrayList<News> newsList = new ArrayList<>();
@@ -44,6 +46,7 @@ public final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream.", e);
         }
+        newsList.clear();
         return extractResultsFromJSON(jsonResponse);
     }
 
@@ -111,9 +114,11 @@ public final class QueryUtils {
             JSONObject rootObject = new JSONObject(newsJson);
             JSONObject response = rootObject.optJSONObject("response");
             JSONArray resultsArray = response.optJSONArray("results");
-            JSONArray leadContentArray = response.optJSONArray("leadContent");
             getThroughArray(resultsArray);
-            getThroughArray(leadContentArray);
+            if (leadContentChecked) {
+                JSONArray leadContentArray = response.optJSONArray("leadContent");
+                getThroughArray(leadContentArray);
+            }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem with parsing news JSON results.", e);
         }
