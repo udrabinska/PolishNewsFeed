@@ -11,6 +11,7 @@
 
     <SwitchPreference
         android:id="@+id/lead_content_switch"
+        android:defaultValue="true"
         android:key="@string/lead_content_key"
         android:summaryOff="@string/lead_content_unchecked"
         android:summaryOn="@string/lead_content_checked"

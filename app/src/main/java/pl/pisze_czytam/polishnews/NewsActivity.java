@@ -29,6 +29,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     TextView emptyView;
     ProgressBar progressBar;
     private NewsAdapter newsAdapter;
+    private static final int NEWS_LOADER_ID = 1;
+    public static boolean leadContentChecked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,16 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
 
+        // check if preference is switched on to know if leadContent should be loaded too
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        leadContentChecked = sharedPreferences.getBoolean(getString(R.string.lead_content_key), true);
+
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected) {
-            getLoaderManager().initLoader(0, null, this);
+            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
         } else {
             progressBar.setVisibility(View.GONE);
             emptyView.setText(R.string.no_internet);

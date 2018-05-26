@@ -9,8 +9,9 @@ import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import static pl.pisze_czytam.polishnews.NewsActivity.leadContentChecked;
+
 public class SettingsActivity extends AppCompatActivity {
-    public static boolean leadContentChecked = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,13 +46,6 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             String stringValue = newValue.toString();
-            if (preference instanceof SwitchPreference) {
-                if (stringValue.equals("true")) {
-                    leadContentChecked = true;
-                } else {
-                    leadContentChecked = false;
-                }
-            }
             preference.setSummary(stringValue);
             return true;
         }

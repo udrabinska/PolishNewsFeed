@@ -29,7 +29,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static pl.pisze_czytam.polishnews.SettingsActivity.leadContentChecked;
+import static pl.pisze_czytam.polishnews.NewsActivity.leadContentChecked;
+
 
 public final class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
