@@ -46,6 +46,7 @@ public final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream.", e);
         }
+        newsList.clear();
         return extractResultsFromJSON(jsonResponse);
     }
 
@@ -114,8 +115,7 @@ public final class QueryUtils {
             JSONObject response = rootObject.optJSONObject("response");
             JSONArray resultsArray = response.optJSONArray("results");
             getThroughArray(resultsArray);
-            boolean isChecked = leadContentChecked;
-            if (isChecked) {
+            if (leadContentChecked) {
                 JSONArray leadContentArray = response.optJSONArray("leadContent");
                 getThroughArray(leadContentArray);
             }

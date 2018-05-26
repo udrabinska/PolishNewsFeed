@@ -13,6 +13,6 @@
     <string name="lead_content_key" translatable="false">lead_content</string>
     <string name="lead_content_label">Add 10 most popular news?</string>
     <string name="lead_content_summary">Want to know Guardian\'s most popular?</string>
-    <string name="lead_content_checked">Lead news will be added.</string>
-    <string name="lead_content_unchecked">Lead news won\'t be added.</string>
+    <string name="lead_content_checked">Lead news added to your feed.</string>
+    <string name="lead_content_unchecked">Lead news won\'t be shown.</string>
 </resources>
