@@ -1,0 +1,111 @@
+[33mcommit 44b6b9ec69ab778bc290f770270cb83424aa8dbb[m[33m ([m[1;36mHEAD -> [m[1;32mpreferences-2[m[33m, [m[1;31morigin/preferences-2[m[33m)[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Fri May 25 23:08:20 2018 +0200
+
+    News without leadContent # It doesn't show less news after change in settings
+
+[33mcommit a71814f642b061d7933eaf5866fa62dc5af0d851[m[33m ([m[1;31morigin/preferences[m[33m, [m[1;32mpreferences[m[33m)[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Fri May 25 12:05:38 2018 +0200
+
+    Settings menu and number of news preference added #
+    # News aren't displayed according to number, because there are always 10 more news from leadContent
+
+[33mcommit 75d0b16316accd03d5a05ed41b9ac6205b5f18ca[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Mon May 21 12:07:57 2018 +0200
+
+    One empty view instaed of text + image
+
+[33mcommit b0b0c07634311607cf64cec2b6ca8ca471be3eca[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Mon May 21 11:22:51 2018 +0200
+
+    Connection problem images added
+
+[33mcommit b3b4c0942af0121e4005c8bdd9810aa0aa0bf425[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Mon May 21 12:17:51 2018 +0200
+
+    Longer info for a user while problems with connection
+
+[33mcommit c957380b0ea4197f15f8e13342162e3d7e0ea015[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sun May 20 11:04:15 2018 +0200
+
+    Bit of code cleaning
+
+[33mcommit deea15bef79121ac07c7cd018db25d965cdfe328[m
+Author: Ula Drabińska <35890389+eovka@users.noreply.github.com>
+Date:   Sun May 20 10:48:55 2018 +0200
+
+    Create README.md
+
+[33mcommit b192341011026f792f5d15e7e1cda8ef23f65974[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sun May 20 10:44:53 2018 +0200
+
+    Visual polish
+
+[33mcommit 4f279e1e76b9e7b9bf04823d8279359ecde70124[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sun May 20 10:29:31 2018 +0200
+
+    Small layout changes; icon added
+
+[33mcommit 0a7798f23fa20af774744e018d9aad55d088c0ff[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sun May 20 03:02:06 2018 +0200
+
+    SectionName added, sorting by date fixed
+    # to sort by date format of date changed
+
+[33mcommit dd90cc1fc7376e91b304678f562316b457449f3c[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sun May 20 02:12:24 2018 +0200
+
+    JSON data format cleaned up
+
+[33mcommit a081aec3eb58af9e52186daf8d3e5b86b6c64a2c[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sun May 20 01:46:39 2018 +0200
+
+    One method to extract data from both JSONArrays
+
+[33mcommit ff0f45fbfd33b52dea3e34c66798ff4efa3fd9ce[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sun May 20 01:35:05 2018 +0200
+
+    Headlines cleared from html tags; date cut
+
+[33mcommit 37503061091f0520314eb2502223df7e116ef71b[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sat May 19 22:39:12 2018 +0200
+
+    Sorting news by date, deleting duplicated news added
+
+[33mcommit bfa1b1d8e4645d19359b3ce00e7d7374d8fd00d0[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sat May 19 21:31:58 2018 +0200
+
+    Second news array (with lead content) added
+
+[33mcommit dab5b7ada9ff266e6e13724633cb06460e5ded98[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sat May 19 20:01:26 2018 +0200
+
+    NewsLoader, QueryUtils  added; API key hidden
+    
+    # All JSON parsing and HTTP request handled
+
+[33mcommit 25da4e07d83abc50de0ac91de364642d10d1bf4a[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sat May 19 09:35:14 2018 +0200
+
+    News class and NewsAdapter created
+
+[33mcommit 5ddbbcf18c0547c25ae21cd5ca603ca9624826de[m
+Author: Urszula Drabińska <u.drabinska@gmail.com>
+Date:   Sat May 19 00:18:16 2018 +0200
+
+    Initial commit: layout

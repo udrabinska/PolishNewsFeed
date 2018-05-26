@@ -22,13 +22,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>> {
+public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>>, SharedPreferences.OnSharedPreferenceChangeListener {
     String requestWithoutKey = "https://content.guardianapis.com/world/poland?show-fields=trailText,byline,thumbnail";
     String apiKey = BuildConfig.ApiKey;
     ListView newsList;
     TextView emptyView;
     ProgressBar progressBar;
     private NewsAdapter newsAdapter;
+    private static final int NEWS_LOADER_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +44,15 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected) {
-            getLoaderManager().initLoader(0, null, this);
+            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
         } else {
             progressBar.setVisibility(View.GONE);
             emptyView.setText(R.string.no_internet);
@@ -110,5 +114,15 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
             startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.news_number_key))) {
+            newsAdapter.clear();
+            emptyView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
+        }
     }
 }
