@@ -44,6 +44,7 @@ public final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream.", e);
         }
+        newsList.clear();
         return extractResultsFromJSON(jsonResponse);
     }
 
