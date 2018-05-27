@@ -1,10 +1,12 @@
 package pl.pisze_czytam.polishnews;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -115,10 +117,12 @@ public final class QueryUtils {
             JSONObject rootObject = new JSONObject(newsJson);
             JSONObject response = rootObject.optJSONObject("response");
             JSONArray resultsArray = response.optJSONArray("results");
-            getThroughArray(resultsArray);
+            int colorRegularNews = MyApp.getContext().getResources().getColor(R.color.backgroundColor);
+            getThroughArray(resultsArray, colorRegularNews);
             if (leadContentChecked) {
                 JSONArray leadContentArray = response.optJSONArray("leadContent");
-                getThroughArray(leadContentArray);
+                int colorLeadNews = MyApp.getContext().getResources().getColor(R.color.colorAccentTransparent);
+                getThroughArray(leadContentArray, colorLeadNews);
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem with parsing news JSON results.", e);
@@ -143,7 +147,7 @@ public final class QueryUtils {
         return newsList;
     }
 
-    private static void getThroughArray(JSONArray jsonArray) {
+    private static void getThroughArray(JSONArray jsonArray, int backgroundColor) {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject news = jsonArray.optJSONObject(i);
 
@@ -179,7 +183,7 @@ public final class QueryUtils {
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
             }
-            newsList.add(new News(title, author, date, section, trailer, url, image));
+            newsList.add(new News(title, author, date, section, trailer, url, image, backgroundColor));
         }
     }
     private static Bitmap getBitmapFromURL(String imageUrl) throws IOException {

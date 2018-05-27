@@ -1,5 +1,6 @@
 package pl.pisze_czytam.polishnews;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -49,5 +50,11 @@ public class SettingsActivity extends AppCompatActivity {
             preference.setSummary(stringValue);
             return true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent (SettingsActivity.this, NewsActivity.class));
     }
 }

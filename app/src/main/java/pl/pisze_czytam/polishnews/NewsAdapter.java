@@ -29,6 +29,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
             private TextView section;
             private ImageView image;
             private TextView trailer;
+            private View newsContainer;
         }
 
         ViewHolder holder;
@@ -41,6 +42,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
             holder.section = newsItem.findViewById(R.id.section_view);
             holder.image = newsItem.findViewById(R.id.image_view);
             holder.trailer = newsItem.findViewById(R.id.trailer_view);
+            holder.newsContainer = newsItem.findViewById(R.id.news_container);
             newsItem.setTag(holder);
         } else {
             holder = (ViewHolder) newsItem.getTag();
@@ -53,6 +55,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         holder.section.setText(currentNews.getSection());
         holder.image.setImageDrawable(currentNews.getImage());
         holder.trailer.setText(currentNews.getTrailer());
+        holder.newsContainer.setBackgroundColor(currentNews.getColorBackground());
 
         return newsItem;
     }

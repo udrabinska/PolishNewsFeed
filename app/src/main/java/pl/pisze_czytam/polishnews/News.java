@@ -10,8 +10,9 @@ public class News {
     private String trailer;
     private String url;
     private Drawable image;
+    private int colorBackground;
 
-    public News(String title, String author, String date, String section, String trailer, String url, Drawable image) {
+    public News(String title, String author, String date, String section, String trailer, String url, Drawable image, int colorBackground) {
         this.title = title;
         this.author = author;
         this.date = date;
@@ -19,6 +20,7 @@ public class News {
         this.trailer = trailer;
         this.url = url;
         this.image = image;
+        this.colorBackground = colorBackground;
     }
 
     public String getTitle() {
@@ -41,5 +43,8 @@ public class News {
     }
     public Drawable getImage() {
         return image;
+    }
+    public int getColorBackground() {
+        return colorBackground;
     }
 }
