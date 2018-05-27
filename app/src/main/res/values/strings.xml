@@ -15,5 +15,9 @@
     <string name="lead_content_summary">Want to know Guardian\'s most popular?</string>
     <string name="lead_content_checked">Lead news added to recent ones.</string>
     <string name="lead_content_unchecked">Lead news won\'t be shown.</string>
+    <string name="check_sections">Check your favourite sections</string>
+    <string name="education_key" translatable="false">education</string>
+    <string name="education_label">Education</string>
+    <string name="education_default">true</string>
 
 </resources>

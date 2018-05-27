@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -81,6 +83,15 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         Uri baseUri = Uri.parse(requestWithoutKey);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("page-size", newsNumber);
+
+        // check if exclude education from feed
+        boolean educationSec = sharedPreferences.getBoolean(getString(R.string.education_key),
+                true);
+        String educationState = getString(R.string.education_key);
+        if (!educationSec) {
+            educationState = "-" + educationState;
+            uriBuilder.appendQueryParameter("section", educationState);
+        }
         uriBuilder.appendQueryParameter("api-key", apiKey);
 
         return new NewsLoader(this, uriBuilder.toString());

@@ -3,6 +3,7 @@ package pl.pisze_czytam.polishnews;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -30,6 +31,8 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferencesSummaryToValue(newsNumber);
             Preference leadContent = findPreference(getString(R.string.lead_content_key));
             bindPreferencesSummaryToValue(leadContent);
+            Preference education = findPreference(getString(R.string.education_key));
+            bindPreferencesSummaryToValue(education);
         }
 
         private void bindPreferencesSummaryToValue(Preference preference) {
@@ -38,6 +41,9 @@ public class SettingsActivity extends AppCompatActivity {
             if (preference instanceof SwitchPreference) {
                 leadContentChecked = sharedPreferences.getBoolean(preference.getKey(), true);
                 onPreferenceChange(preference, leadContentChecked);
+            } else if (preference instanceof CheckBoxPreference) {
+                boolean isChecked = sharedPreferences.getBoolean(preference.getKey(), true);
+                onPreferenceChange(preference, isChecked);
             } else {
                 String preferenceString = sharedPreferences.getString(preference.getKey(), "");
                 onPreferenceChange(preference, preferenceString);

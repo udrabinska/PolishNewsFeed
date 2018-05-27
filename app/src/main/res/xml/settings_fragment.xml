@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/settings_title">
     <EditTextPreference
-        android:id="@+id/news_number_edittext"
         android:defaultValue="@string/news_number_default"
         android:inputType="numberDecimal"
         android:key="@string/news_number_key"
@@ -10,11 +9,18 @@
         android:title="@string/news_number_label" />
 
     <SwitchPreference
-        android:id="@+id/lead_content_switch"
         android:defaultValue="true"
         android:key="@string/lead_content_key"
         android:summaryOff="@string/lead_content_unchecked"
         android:summaryOn="@string/lead_content_checked"
         android:title="@string/lead_content_label" />
 
+    <PreferenceCategory android:title="@string/check_sections">
+        <CheckBoxPreference
+            android:defaultValue="@string/education_default"
+            android:key="@string/education_key"
+            android:selectAllOnFocus="true"
+            android:summary=""
+            android:title="@string/education_label" />
+    </PreferenceCategory>
 </PreferenceScreen>
