@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import java.util.HashSet;
 
 import static pl.pisze_czytam.polishnews.NewsActivity.leadContentChecked;
 
@@ -31,21 +34,8 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferencesSummaryToValue(newsNumber);
             Preference leadContent = findPreference(getString(R.string.lead_content_key));
             bindPreferencesSummaryToValue(leadContent);
-            // Find all CheckBoxPreferences.
-            String[] sections = getResources().getStringArray(R.array.section_keys);
-            for (String section : sections) {
-                Preference preference = findPreference(section);
-                bindPreferencesSummaryToValue(preference);
-            }
-//            Preference artDesign = findPreference(getString(R.string.art_design_key));
-//            bindPreferencesSummaryToValue(artDesign);
-//            Preference books = findPreference(getString(R.string.books_key));
-//            bindPreferencesSummaryToValue(books);
-//            Preference business = findPreference(getString(R.string.business_key));
-//            bindPreferencesSummaryToValue(business);
-//            Preference education = findPreference(getString(R.string.education_key));
-//            bindPreferencesSummaryToValue(education);
-
+            Preference checkBoxes = findPreference(getString(R.string.check_sections_key));
+            bindPreferencesSummaryToValue(checkBoxes);
         }
 
         private void bindPreferencesSummaryToValue(Preference preference) {
@@ -54,10 +44,11 @@ public class SettingsActivity extends AppCompatActivity {
             if (preference instanceof SwitchPreference) {
                 leadContentChecked = sharedPreferences.getBoolean(preference.getKey(), true);
                 onPreferenceChange(preference, leadContentChecked);
-            } else if (preference instanceof CheckBoxPreference) {
-                boolean isChecked = sharedPreferences.getBoolean(preference.getKey(), true);
-                onPreferenceChange(preference, isChecked);
-            } else {
+            } else if (preference instanceof MultiSelectListPreference) {
+                Object value = sharedPreferences.getStringSet(preference.getKey(), new HashSet<String>());
+                onPreferenceChange(preference, value);
+            }
+            else {
                 String preferenceString = sharedPreferences.getString(preference.getKey(), "");
                 onPreferenceChange(preference, preferenceString);
             }

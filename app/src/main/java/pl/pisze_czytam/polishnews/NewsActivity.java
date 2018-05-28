@@ -20,7 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>> {
     String requestWithoutKey = "https://content.guardianapis.com/world/poland?show-fields=trailText,byline,thumbnail";
@@ -82,25 +84,24 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("page-size", newsNumber);
 
-        // Check if any sections is unchecked - if yes, exclude it in url request.
-        String[] sections = getResources().getStringArray(R.array.section_keys);
+        // Get the selected sections.
+        Set<String> sectionsToInclude = sharedPreferences.getStringSet(getString(R.string.check_sections_key), new HashSet<String>());
+        String[] sections = sectionsToInclude.toArray(new String[sectionsToInclude.size()]);
         StringBuilder addToQuery = new StringBuilder();
-        String prefix = "-";
-        for (String section : sections) {
-            boolean isChecked = sharedPreferences.getBoolean(section, true);
-            if (!isChecked) {
-                addToQuery.append(prefix);
-                addToQuery.append(section);
-                prefix = ",-";
-            }
+        for (int i = 0; i < sections.length; i++) {
+            String section = sections[i];
+            addToQuery.append(section);
+                if (i < sections.length - 1) {
+                    String prefix = ",";
+                    addToQuery.append(prefix);
+                }
         }
+
             String query = addToQuery.toString();
             if (!query.equals("")) {
                 uriBuilder.appendQueryParameter("section", addToQuery.toString());
             }
-
             uriBuilder.appendQueryParameter("api-key", apiKey);
-
             return new NewsLoader(this, uriBuilder.toString());
         }
 
