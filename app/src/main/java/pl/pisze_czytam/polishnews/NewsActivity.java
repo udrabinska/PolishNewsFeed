@@ -45,7 +45,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
 
-        // check if preference is switched on to know if leadContent should be loaded too
+        // check if preference is switched on to know, if leadContent should be loaded too
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         leadContentChecked = sharedPreferences.getBoolean(getString(R.string.lead_content_key), true);
 
@@ -82,31 +82,27 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("page-size", newsNumber);
 
-        // check if exclude education from feed
-        boolean booksChecked = sharedPreferences.getBoolean(getString(R.string.books_key), true);
-        boolean educationChecked = sharedPreferences.getBoolean(getString(R.string.education_key), true);
-
+        // Check if any sections is unchecked - if yes, exclude it in url request.
+        String[] sections = getResources().getStringArray(R.array.section_keys);
         StringBuilder addToQuery = new StringBuilder();
         String prefix = "-";
-        if (!booksChecked) {
-            addToQuery.append(prefix);
-            addToQuery.append(getString(R.string.books_key));
-            prefix = ",-";
+        for (String section : sections) {
+            boolean isChecked = sharedPreferences.getBoolean(section, true);
+            if (!isChecked) {
+                addToQuery.append(prefix);
+                addToQuery.append(section);
+                prefix = ",-";
+            }
         }
-        if (!educationChecked) {
-            addToQuery.append(prefix);
-            addToQuery.append(getString(R.string.education_key));
-            prefix = ",-";
-        }
-        String query = addToQuery.toString();
-        if (!query.equals("")) {
-            uriBuilder.appendQueryParameter("section", addToQuery.toString());
-        }
+            String query = addToQuery.toString();
+            if (!query.equals("")) {
+                uriBuilder.appendQueryParameter("section", addToQuery.toString());
+            }
 
-        uriBuilder.appendQueryParameter("api-key", apiKey);
+            uriBuilder.appendQueryParameter("api-key", apiKey);
 
-        return new NewsLoader(this, uriBuilder.toString());
-    }
+            return new NewsLoader(this, uriBuilder.toString());
+        }
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {

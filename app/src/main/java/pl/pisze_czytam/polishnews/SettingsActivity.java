@@ -31,10 +31,21 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferencesSummaryToValue(newsNumber);
             Preference leadContent = findPreference(getString(R.string.lead_content_key));
             bindPreferencesSummaryToValue(leadContent);
-            Preference education = findPreference(getString(R.string.education_key));
-            bindPreferencesSummaryToValue(education);
-            Preference books = findPreference(getString(R.string.books_key));
-            bindPreferencesSummaryToValue(books);
+            // Find all CheckBoxPreferences.
+            String[] sections = getResources().getStringArray(R.array.section_keys);
+            for (String section : sections) {
+                Preference preference = findPreference(section);
+                bindPreferencesSummaryToValue(preference);
+            }
+//            Preference artDesign = findPreference(getString(R.string.art_design_key));
+//            bindPreferencesSummaryToValue(artDesign);
+//            Preference books = findPreference(getString(R.string.books_key));
+//            bindPreferencesSummaryToValue(books);
+//            Preference business = findPreference(getString(R.string.business_key));
+//            bindPreferencesSummaryToValue(business);
+//            Preference education = findPreference(getString(R.string.education_key));
+//            bindPreferencesSummaryToValue(education);
+
         }
 
         private void bindPreferencesSummaryToValue(Preference preference) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="section_keys">
+        <item>@string/art_design_key</item>
+        <item>@string/books_key</item>
+        <item>@string/business_key</item>
+        <item>@string/cities_key</item>
+        <item>@string/education_key</item>
+        <item>@string/environment_key</item>
+        <item>@string/film_key</item>
+        <item>@string/life_style_key</item>
+        <item>@string/media_key</item>
+        <item>@string/music_key</item>
+        <item>@string/news_key</item>
+        <item>@string/opinion_key</item>
+        <item>@string/other_key</item>
+        <item>@string/politics_key</item>
+        <item>@string/science_key</item>
+        <item>@string/society_key</item>
+        <item>@string/sport_key</item>
+        <item>@string/travel_key</item>
+    </string-array>
+</resources>
