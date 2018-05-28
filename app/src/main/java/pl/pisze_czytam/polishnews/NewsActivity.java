@@ -31,7 +31,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     private NewsAdapter newsAdapter;
     private static final int NEWS_LOADER_ID = 1;
     public static boolean leadContentChecked;
-    ArrayList<String> secToDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,20 +83,26 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         uriBuilder.appendQueryParameter("page-size", newsNumber);
 
         // check if exclude education from feed
-        boolean educationChecked = sharedPreferences.getBoolean(getString(R.string.education_key),true);
         boolean booksChecked = sharedPreferences.getBoolean(getString(R.string.books_key), true);
-        String educationState = getString(R.string.education_key);
-        String booksState = getString(R.string.books_key);
+        boolean educationChecked = sharedPreferences.getBoolean(getString(R.string.education_key), true);
 
-        if (!educationChecked) {
-            educationState = "-" + educationState;
-            uriBuilder.appendQueryParameter("section", educationState);
-        }
-
+        StringBuilder addToQuery = new StringBuilder();
+        String prefix = "-";
         if (!booksChecked) {
-            booksState = "-" + booksState;
-            uriBuilder.appendQueryParameter("section", booksState);
+            addToQuery.append(prefix);
+            addToQuery.append(getString(R.string.books_key));
+            prefix = ",-";
         }
+        if (!educationChecked) {
+            addToQuery.append(prefix);
+            addToQuery.append(getString(R.string.education_key));
+            prefix = ",-";
+        }
+        String query = addToQuery.toString();
+        if (!query.equals("")) {
+            uriBuilder.appendQueryParameter("section", addToQuery.toString());
+        }
+
         uriBuilder.appendQueryParameter("api-key", apiKey);
 
         return new NewsLoader(this, uriBuilder.toString());
