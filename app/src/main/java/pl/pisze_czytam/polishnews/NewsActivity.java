@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +21,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static pl.pisze_czytam.polishnews.SettingsActivity.sectionsToExclude;
 
 public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>> {
     String requestWithoutKey = "https://content.guardianapis.com/world/poland?show-fields=trailText,byline,thumbnail";
@@ -76,6 +76,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //// String defaultValue = getResources().getString(R.string.education_default);
+        //// String highScore = sharedPreferences.getString(getString(R.string.education_key), defaultValue);
 
         String newsNumber = sharedPreferences.getString(getString(R.string.news_number_key),
                 getString(R.string.news_number_default));
@@ -84,14 +86,18 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("page-size", newsNumber);
 
-        // check if exclude education from feed
-        boolean educationSec = sharedPreferences.getBoolean(getString(R.string.education_key),
-                true);
-        String educationState = getString(R.string.education_key);
-        if (!educationSec) {
-            educationState = "-" + educationState;
-            uriBuilder.appendQueryParameter("section", educationState);
+        ArrayList<String> sectionExcluded = sectionsToExclude;
+        if (sectionExcluded.size() != 0) {
+            StringBuilder minusQuery = new StringBuilder();
+            if (sectionExcluded.size() > 0) {
+                minusQuery.append("-").append(sectionExcluded.get(0));
+                for (int i = 1; i < sectionExcluded.size(); i++) {
+                    minusQuery.append(",-").append(sectionExcluded.get(i));
+                }
+                uriBuilder.appendQueryParameter("section", minusQuery.toString());
+            }
         }
+
         uriBuilder.appendQueryParameter("api-key", apiKey);
 
         return new NewsLoader(this, uriBuilder.toString());

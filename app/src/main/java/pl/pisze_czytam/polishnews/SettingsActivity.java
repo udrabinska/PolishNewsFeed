@@ -11,9 +11,12 @@ import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import static pl.pisze_czytam.polishnews.NewsActivity.leadContentChecked;
 
 public class SettingsActivity extends AppCompatActivity {
+    static ArrayList<String> sectionsToExclude = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,8 +55,16 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            if (preference instanceof CheckBoxPreference) {
+                if (newValue.toString().equals("false")) {
+                    sectionsToExclude.add(preference.getKey());
+                } else if (newValue.toString().equals("true")) {
+                    sectionsToExclude.remove(preference.getKey());
+                }
+            } else {
             String stringValue = newValue.toString();
             preference.setSummary(stringValue);
+            }
             return true;
         }
     }
