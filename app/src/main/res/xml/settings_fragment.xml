@@ -15,8 +15,7 @@
         android:summaryOn="@string/lead_content_checked"
         android:title="@string/lead_content_label" />
 
-    <MultiSelectListPreference
-        android:defaultValue="@string/checkboxes_default"
+    <pl.pisze_czytam.polishnews.MyCheckBoxList
         android:entries="@array/sections_label"
         android:entryValues="@array/section_keys"
         android:key="@string/check_sections_key"

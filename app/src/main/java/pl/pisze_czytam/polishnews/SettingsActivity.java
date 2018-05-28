@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (preference instanceof SwitchPreference) {
                 leadContentChecked = sharedPreferences.getBoolean(preference.getKey(), true);
                 onPreferenceChange(preference, leadContentChecked);
-            } else if (preference instanceof MultiSelectListPreference) {
+            } else if (preference instanceof MyCheckBoxList) {
                 Object value = sharedPreferences.getStringSet(preference.getKey(), new HashSet<String>());
                 onPreferenceChange(preference, value);
             }
