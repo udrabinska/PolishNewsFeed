@@ -17,10 +17,14 @@
 
     <PreferenceCategory android:title="@string/check_sections">
         <CheckBoxPreference
-            android:defaultValue="@string/education_default"
+            android:defaultValue="@string/checkboxes_default"
+            android:key="@string/books_key"
+            android:selectAllOnFocus="true"
+            android:title="@string/books_label" />
+        <CheckBoxPreference
+            android:defaultValue="@string/checkboxes_default"
             android:key="@string/education_key"
             android:selectAllOnFocus="true"
-            android:summary=""
             android:title="@string/education_label" />
     </PreferenceCategory>
 </PreferenceScreen>

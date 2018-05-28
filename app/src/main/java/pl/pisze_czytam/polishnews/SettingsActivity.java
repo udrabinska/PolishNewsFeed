@@ -33,6 +33,8 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferencesSummaryToValue(leadContent);
             Preference education = findPreference(getString(R.string.education_key));
             bindPreferencesSummaryToValue(education);
+            Preference books = findPreference(getString(R.string.books_key));
+            bindPreferencesSummaryToValue(books);
         }
 
         private void bindPreferencesSummaryToValue(Preference preference) {
@@ -52,8 +54,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            String stringValue = newValue.toString();
-            preference.setSummary(stringValue);
+            if (!(preference instanceof CheckBoxPreference)) {
+                String stringValue = newValue.toString();
+                preference.setSummary(stringValue);
+            }
             return true;
         }
     }

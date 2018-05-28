@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +31,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     private NewsAdapter newsAdapter;
     private static final int NEWS_LOADER_ID = 1;
     public static boolean leadContentChecked;
+    ArrayList<String> secToDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +84,19 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         uriBuilder.appendQueryParameter("page-size", newsNumber);
 
         // check if exclude education from feed
-        boolean educationSec = sharedPreferences.getBoolean(getString(R.string.education_key),
-                true);
+        boolean educationChecked = sharedPreferences.getBoolean(getString(R.string.education_key),true);
+        boolean booksChecked = sharedPreferences.getBoolean(getString(R.string.books_key), true);
         String educationState = getString(R.string.education_key);
-        if (!educationSec) {
+        String booksState = getString(R.string.books_key);
+
+        if (!educationChecked) {
             educationState = "-" + educationState;
             uriBuilder.appendQueryParameter("section", educationState);
+        }
+
+        if (!booksChecked) {
+            booksState = "-" + booksState;
+            uriBuilder.appendQueryParameter("section", booksState);
         }
         uriBuilder.appendQueryParameter("api-key", apiKey);
 
