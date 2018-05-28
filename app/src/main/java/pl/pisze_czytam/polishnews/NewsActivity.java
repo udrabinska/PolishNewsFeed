@@ -31,7 +31,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     private NewsAdapter newsAdapter;
     private static final int NEWS_LOADER_ID = 1;
     public static boolean leadContentChecked;
-    ArrayList<String> secToDelete;
+    public static String uncheckedSections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsList.setEmptyView(emptyView);
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
+        uncheckedSections = null;
 
         // check if preference is switched on to know if leadContent should be loaded too
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -82,21 +83,11 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         Uri baseUri = Uri.parse(requestWithoutKey);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("page-size", newsNumber);
-
-        // check if exclude education from feed
-        boolean educationChecked = sharedPreferences.getBoolean(getString(R.string.education_key),true);
-        boolean booksChecked = sharedPreferences.getBoolean(getString(R.string.books_key), true);
-        String educationState = getString(R.string.education_key);
-        String booksState = getString(R.string.books_key);
-
-        if (!educationChecked) {
-            educationState = "-" + educationState;
-            uriBuilder.appendQueryParameter("section", educationState);
-        }
-
-        if (!booksChecked) {
-            booksState = "-" + booksState;
-            uriBuilder.appendQueryParameter("section", booksState);
+        if (uncheckedSections != null) {
+            String deletedSections = uncheckedSections;
+            if (!(deletedSections.equals(""))) {
+                uriBuilder.appendQueryParameter("section", deletedSections);
+            }
         }
         uriBuilder.appendQueryParameter("api-key", apiKey);
 

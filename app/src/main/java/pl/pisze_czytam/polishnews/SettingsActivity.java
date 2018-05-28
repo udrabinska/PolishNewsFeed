@@ -11,7 +11,10 @@ import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import static pl.pisze_czytam.polishnews.NewsActivity.leadContentChecked;
+import static pl.pisze_czytam.polishnews.NewsActivity.uncheckedSections;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -54,7 +57,28 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (!(preference instanceof CheckBoxPreference)) {
+            if (preference instanceof CheckBoxPreference) {
+                ArrayList<String> keys = new ArrayList<>();
+                boolean isChecked = (boolean) newValue;
+                String key = preference.getKey();
+                if (!isChecked) {
+                    keys.add(key);
+                } else {
+                    int i = keys.indexOf(key);
+                    if (i >= 0) {
+                        keys.remove(i);
+                    }
+                }
+                uncheckedSections = "";
+                StringBuilder addToQuery = new StringBuilder();
+                String prefix = "-";
+                for (int i = 0; i < keys.size(); i++) {
+                        addToQuery.append(prefix);
+                        prefix = ",-";
+                        addToQuery.append(keys.get(i));
+                }
+                    uncheckedSections = addToQuery.toString();
+            } else {
                 String stringValue = newValue.toString();
                 preference.setSummary(stringValue);
             }
