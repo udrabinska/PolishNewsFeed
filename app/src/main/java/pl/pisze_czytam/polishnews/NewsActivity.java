@@ -50,6 +50,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         // check if preference is switched on to know, if leadContent should be loaded too
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         leadContentChecked = sharedPreferences.getBoolean(getString(R.string.lead_content_key), true);
+        PreferenceManager.setDefaultValues(this, R.xml.settings_fragment, false);
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
