@@ -47,7 +47,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
 
-        // check if preference is switched on to know, if leadContent should be loaded too
+        // Check if preference is switched on to know, if leadContent should be loaded too
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         leadContentChecked = sharedPreferences.getBoolean(getString(R.string.lead_content_key), true);
         PreferenceManager.setDefaultValues(this, R.xml.settings_fragment, false);
@@ -92,19 +92,22 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         for (int i = 0; i < sections.length; i++) {
             String section = sections[i];
             addToQuery.append(section);
-                if (i < sections.length - 1) {
-                    String prefix = ",";
-                    addToQuery.append(prefix);
-                }
+            if (i < sections.length - 1) {
+                String suffix = getString(R.string.comma);
+                addToQuery.append(suffix);
+            }
         }
 
-            String query = addToQuery.toString();
-            if (!query.equals("")) {
-                uriBuilder.appendQueryParameter("section", addToQuery.toString());
-            }
-            uriBuilder.appendQueryParameter("api-key", apiKey);
-            return new NewsLoader(this, uriBuilder.toString());
+        if (!(addToQuery.toString().equals(""))) {
+            uriBuilder.appendQueryParameter("section", addToQuery.toString());
         }
+        uriBuilder.appendQueryParameter("api-key", apiKey);
+        String query = uriBuilder.toString();
+        if (query.contains("%2C")) {
+            query = query.replaceAll("%2C", getString(R.string.comma));
+        }
+        return new NewsLoader(this, query);
+    }
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {

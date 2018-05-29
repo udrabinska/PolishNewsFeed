@@ -58,5 +58,6 @@
     <string name="sport_key" translatable="false">sport</string>
     <string name="travel_label">Travel</string>
     <string name="travel_key" translatable="false">travel</string>
+    <string name="comma">&#44;</string>
 
 </resources>
