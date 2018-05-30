@@ -15,96 +15,10 @@
         android:summaryOn="@string/lead_content_checked"
         android:title="@string/lead_content_label" />
 
-    <PreferenceCategory android:title="@string/check_sections">
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/art_design_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/art_design_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/books_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/books_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/business_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/business_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/cities_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/cities_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/education_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/education_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/environment_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/environment_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/film_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/film_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/life_style_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/life_style_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/media_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/media_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/music_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/music_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/news_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/news_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/opinion_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/opinion_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/other_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/other_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/politics_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/politics_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/science_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/science_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/society_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/society_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/sport_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/sport_label" />
-        <CheckBoxPreference
-            android:defaultValue="@string/checkboxes_default"
-            android:key="@string/travel_key"
-            android:selectAllOnFocus="true"
-            android:title="@string/travel_label" />
-    </PreferenceCategory>
+    <MultiSelectListPreference
+        android:defaultValue="@array/section_keys"
+        android:entries="@array/sections_label"
+        android:entryValues="@array/section_keys"
+        android:key="@string/check_sections_key"
+        android:title="@string/check_sections" />
 </PreferenceScreen>

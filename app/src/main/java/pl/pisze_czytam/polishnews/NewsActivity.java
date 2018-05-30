@@ -20,7 +20,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>> {
     String requestWithoutKey = "https://content.guardianapis.com/world/poland?show-fields=trailText,byline,thumbnail";
@@ -45,9 +48,10 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
 
-        // check if preference is switched on to know, if leadContent should be loaded too
+        // Check if preference is switched on - to know, if leadContent should be loaded too.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         leadContentChecked = sharedPreferences.getBoolean(getString(R.string.lead_content_key), true);
+        PreferenceManager.setDefaultValues(this, R.xml.settings_fragment, false);
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -82,21 +86,27 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("page-size", newsNumber);
 
-        // Check if any sections is unchecked - if yes, exclude it in url request.
-        String[] sections = getResources().getStringArray(R.array.section_keys);
+        // Check checked sections, compare it to all sections and delete excluded one.
+        Set<String> checkedSections = sharedPreferences.getStringSet(getString(R.string.check_sections_key), new HashSet<String>());
+        String[] sectionsToInclude = checkedSections.toArray(new String[checkedSections.size()]);
+        String[] allSections = getResources().getStringArray(R.array.section_keys);
+
+        ArrayList<String> sectionsToExclude = new ArrayList<>();
+        for (String section : allSections) {
+            if (!Arrays.asList(sectionsToInclude).contains(section)) {
+                sectionsToExclude.add(section);
+            }
+        }
         StringBuilder addToQuery = new StringBuilder();
         String prefix = "-";
-        for (String section : sections) {
-            boolean isChecked = sharedPreferences.getBoolean(section, true);
-            if (!isChecked) {
+        for (String section : sectionsToExclude) {
                 addToQuery.append(prefix);
                 addToQuery.append(section);
                 prefix = ",-";
-            }
         }
-            String query = addToQuery.toString();
-            if (!query.equals("")) {
-                uriBuilder.appendQueryParameter("section", addToQuery.toString());
+            String queryWithSections = addToQuery.toString();
+            if (!queryWithSections.equals("")) {
+                uriBuilder.appendQueryParameter("section", queryWithSections);
             }
 
             uriBuilder.appendQueryParameter("api-key", apiKey);

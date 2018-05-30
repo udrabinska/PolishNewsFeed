@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="preferences_keys">
+        <item>@string/news_number_key</item>
+        <item>@string/lead_content_key</item>
+        <item>@string/check_sections_key</item>
+    </string-array>
+
     <string-array name="section_keys">
         <item>@string/art_design_key</item>
         <item>@string/books_key</item>
@@ -19,5 +25,26 @@
         <item>@string/society_key</item>
         <item>@string/sport_key</item>
         <item>@string/travel_key</item>
+    </string-array>
+
+    <string-array name="sections_label">
+        <item>@string/art_design_label</item>
+        <item>@string/books_label</item>
+        <item>@string/business_label</item>
+        <item>@string/cities_label</item>
+        <item>@string/education_label</item>
+        <item>@string/environment_label</item>
+        <item>@string/film_label</item>
+        <item>@string/life_style_label</item>
+        <item>@string/media_label</item>
+        <item>@string/music_label</item>
+        <item>@string/news_label</item>
+        <item>@string/opinion_label</item>
+        <item>@string/other_label</item>
+        <item>@string/politics_label</item>
+        <item>@string/science_label</item>
+        <item>@string/society_label</item>
+        <item>@string/sport_label</item>
+        <item>@string/travel_label</item>
     </string-array>
 </resources>
