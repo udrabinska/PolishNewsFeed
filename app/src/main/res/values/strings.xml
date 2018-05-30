@@ -59,5 +59,10 @@
     <string name="travel_label">Travel</string>
     <string name="travel_key" translatable="false">travel</string>
     <string name="comma">&#44;</string>
-
+    <string name="show_news_from_day">Show news published:</string>
+    <string name="from_date_key">from-date</string>
+    <string name="from_date_label">from</string>
+    <string name="to_date_key">to-date</string>
+    <string name="to_date_label">to</string>
+    <string name="default_date">2000-01-01</string>
 </resources>
