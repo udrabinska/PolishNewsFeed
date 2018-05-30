@@ -79,12 +79,20 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        String newsNumber = sharedPreferences.getString(getString(R.string.news_number_key),
-                getString(R.string.news_number_default));
-
         Uri baseUri = Uri.parse(requestWithoutKey);
         Uri.Builder uriBuilder = baseUri.buildUpon();
+        String newsNumber = sharedPreferences.getString(getString(R.string.news_number_key), getString(R.string.news_number_default));
         uriBuilder.appendQueryParameter("page-size", newsNumber);
+
+        // Check if a user picked dates. If not, do not add them to query.
+        String dateFrom = sharedPreferences.getString(getString(R.string.from_date_key), getString(R.string.default_date));
+        if (!(dateFrom.equals(getString(R.string.default_date)))) {
+            uriBuilder.appendQueryParameter("from-date", dateFrom);
+        }
+        String dateTo = sharedPreferences.getString(getString(R.string.to_date_key), getString(R.string.default_date));
+        if (!(dateTo.equals(getString(R.string.default_date)))) {
+            uriBuilder.appendQueryParameter("to-date", dateTo);
+        }
 
         // Check checked sections, compare it to all sections and delete excluded one.
         Set<String> checkedSections = sharedPreferences.getStringSet(getString(R.string.check_sections_key), new HashSet<String>());

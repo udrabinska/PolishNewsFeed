@@ -4,9 +4,6 @@
         <item>@string/news_number_key</item>
         <item>@string/lead_content_key</item>
         <item>@string/check_sections_key</item>
-    </string-array>
-
-    <string-array name="date_keys">
         <item>@string/from_date_key</item>
         <item>@string/to_date_key</item>
     </string-array>

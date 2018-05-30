@@ -4,10 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
@@ -26,18 +24,18 @@ public class SettingsActivity extends AppCompatActivity {
     static Calendar calendar = Calendar.getInstance();
     public static final int DATE_PICKER_FROM = 0;
     public static final int DATE_PICKER_TO = 1;
-    int from_year, from_month, from_day, to_year, to_month, to_day;
-    DatePickerDialog.OnDateSetListener from_dateListener, to_dateListener;
-
+    static int from_year, from_month, from_day, to_year, to_month, to_day;
+    static DatePickerDialog.OnDateSetListener from_dateListener, to_dateListener;
+    static SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        dateFormat = new SimpleDateFormat(getString(R.string.date_format), Locale.GERMAN);
     }
 
-    public static class NewsPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
-            DatePickerDialog.OnDateSetListener {
+    public static class NewsPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -49,29 +47,38 @@ public class SettingsActivity extends AppCompatActivity {
                 bindPreferencesSummaryToValue(preference);
             }
 
-//            Preference dateFrom = findPreference(getString(R.string.from_date_key));
-//            dateFrom.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//                @Override
-//                public boolean onPreferenceClick(Preference preference) {
-//                    showDateDialog();
-//                    return false;
-//                }
-//            });
-            String[] dateKeys = getResources().getStringArray(R.array.date_keys);
-            for (String dateKey : dateKeys) {
-                Preference preference = findPreference(dateKey);
-                preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        showDateDialog();
-                        return false;
-                    }
-                });
-            }
+            from_dateListener = new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year, int month, int day) {
+                    calendar.set(Calendar.YEAR, year);
+                    calendar.set(Calendar.MONTH, month);
+                    calendar.set(Calendar.DAY_OF_MONTH, day);
+                    Preference dateFrom = findPreference(getString(R.string.from_date_key));
+                    dateFrom.setSummary(dateFormat.format(calendar.getTime()));
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(dateFrom.getContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(getString(R.string.from_date_key), dateFormat.format(calendar.getTime()));
+                    editor.apply();
+                }
+            };
+
+            to_dateListener = new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year, int month, int day) {
+                    calendar.set(Calendar.YEAR, year);
+                    calendar.set(Calendar.MONTH, month);
+                    calendar.set(Calendar.DAY_OF_MONTH, day);
+                    Preference dateTo = findPreference(getString(R.string.to_date_key));
+                    dateTo.setSummary(dateFormat.format(calendar.getTime()));
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(dateTo.getContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(getString(R.string.to_date_key), dateFormat.format(calendar.getTime()));
+                    editor.apply();
+                }
+            };
         }
 
         private void bindPreferencesSummaryToValue(Preference preference) {
             preference.setOnPreferenceChangeListener(this);
+            preference.setOnPreferenceClickListener(this);
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
             if (preference instanceof SwitchPreference) {
                 leadContentChecked = sharedPreferences.getBoolean(preference.getKey(), true);
@@ -79,12 +86,9 @@ public class SettingsActivity extends AppCompatActivity {
             } else if (preference instanceof MultiSelectListPreference) {
                 Object value = sharedPreferences.getStringSet(preference.getKey(), new HashSet<String>());
                 onPreferenceChange(preference, value);
-            } else if (preference instanceof EditTextPreference) {
+            } else {
                 String preferenceString = sharedPreferences.getString(preference.getKey(), "");
                 onPreferenceChange(preference, preferenceString);
-            } else {
-                String datePreference = sharedPreferences.getString(preference.getKey(), "");
-                onPreferenceChange(preference, datePreference);
             }
         }
 
@@ -93,40 +97,44 @@ public class SettingsActivity extends AppCompatActivity {
             if (!(preference instanceof MultiSelectListPreference)) {
                 String stringValue = newValue.toString();
                 preference.setSummary(stringValue);
-//            } else {
-//                String dateFormat = "yyyy-MM-dd";
-//                SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
-//                preference.setSummary(sdf.format(newValue.toString()));
             }
             return true;
         }
 
         @Override
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.DAY_OF_MONTH, day);
-
-            Preference dateFrom = findPreference(getString(R.string.from_date_key));
-            Preference dateTo = findPreference(getString(R.string.to_date_key));
-            String dateFormat = "yyyy-MM-dd";
-            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
-            dateFrom.setSummary(sdf.format(calendar.getTime()));
-            dateTo.setSummary(sdf.format(calendar.getTime()));
+        public boolean onPreferenceClick(Preference preference) {
+            if (preference == findPreference(getString(R.string.from_date_key))) {
+                showDateDialog(DATE_PICKER_FROM);
+            } else if (preference == findPreference(getString(R.string.to_date_key))) {
+                showDateDialog(DATE_PICKER_TO);
+            }
+            return false;
         }
 
-        private void showDateDialog(){
-            // Show the current date at the launching the calendar.
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            new DatePickerDialog(getActivity(),this, year, month, day).show();
+
+        private void showDateDialog(int id) {
+            // Find the current date at the first launch of the calendar.
+            from_year = calendar.get(Calendar.YEAR);
+            from_month = calendar.get(Calendar.MONTH);
+            from_day = calendar.get(Calendar.DAY_OF_MONTH);
+            to_year = calendar.get(Calendar.YEAR);
+            to_month = calendar.get(Calendar.MONTH);
+            to_day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            switch (id) {
+                case DATE_PICKER_FROM:
+                    new DatePickerDialog(getActivity(), from_dateListener, from_year, from_month, from_day).show();
+                    break;
+                case DATE_PICKER_TO:
+                    new DatePickerDialog(getActivity(), to_dateListener, to_year, to_month, to_day).show();
+                    break;
+            }
         }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent (SettingsActivity.this, NewsActivity.class));
+        startActivity(new Intent(SettingsActivity.this, NewsActivity.class));
     }
 }

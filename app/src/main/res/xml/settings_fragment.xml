@@ -29,13 +29,14 @@
             android:label="@string/from_date_label"
             android:selectAllOnFocus="true"
             android:title="@string/from_date_label"
-            android:hint="2000-01-01" />
+            android:selectable="true" />
         <Preference
+            android:defaultValue="@string/default_date"
             android:inputType="date"
             android:key="@string/to_date_key"
             android:label="@string/to_date_label"
             android:selectAllOnFocus="true"
             android:title="@string/to_date_label"
-            android:hint="2000-01-01" />
+            android:selectable="true" />
     </PreferenceCategory>
 </PreferenceScreen>

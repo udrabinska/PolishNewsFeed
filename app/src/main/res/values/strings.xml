@@ -65,4 +65,5 @@
     <string name="to_date_key">to-date</string>
     <string name="to_date_label">to</string>
     <string name="default_date">2000-01-01</string>
+    <string name="date_format">yyyy-MM-dd</string>
 </resources>
