@@ -41,11 +41,19 @@ public class SettingsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_fragment);
 
+            Preference fromDate = findPreference(getString(R.string.from_date_key));
+            Preference toDate = findPreference(getString(R.string.to_date_key));
+            long currentTimeInMillis = System.currentTimeMillis();
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.date_format), Locale.GERMAN);
+            String dateString = dateFormatter.format(currentTimeInMillis);
+
             String[] preferencesKeys = getResources().getStringArray(R.array.preferences_keys);
             for (String preferenceKey : preferencesKeys) {
                 Preference preference = findPreference(preferenceKey);
                 bindPreferencesSummaryToValue(preference);
             }
+            fromDate.setSummary(getString(R.string.default_date_start));
+            toDate.setSummary(dateString);
 
             from_dateListener = new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -111,7 +119,6 @@ public class SettingsActivity extends AppCompatActivity {
             return false;
         }
 
-
         private void showDateDialog(int id) {
             // Find the current date at the first launch of the calendar.
             from_year = calendar.get(Calendar.YEAR);
@@ -128,6 +135,19 @@ public class SettingsActivity extends AppCompatActivity {
                 case DATE_PICKER_TO:
                     new DatePickerDialog(getActivity(), to_dateListener, to_year, to_month, to_day).show();
                     break;
+            }
+        }
+
+        // Clear dates when user set them, but kill the app while being on settings.
+        @Override
+        public void onStop() {
+            super.onStop();
+            String[] datesKeys = getResources().getStringArray(R.array.dates_keys);
+            for (String dateKey : datesKeys) {
+                Preference preference = findPreference(dateKey);
+                SharedPreferences savedDate = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
+                SharedPreferences.Editor editor = savedDate.edit();
+                editor.remove(preference.getKey()).apply();
             }
         }
     }

@@ -23,20 +23,21 @@
         android:title="@string/check_sections" />
     <PreferenceCategory android:title="@string/show_news_from_day">
         <Preference
-            android:defaultValue="@string/default_date"
             android:inputType="date"
             android:key="@string/from_date_key"
             android:label="@string/from_date_label"
             android:selectAllOnFocus="true"
-            android:title="@string/from_date_label"
-            android:selectable="true" />
+            android:selectable="true"
+            android:summary="@string/default_date_start"
+            android:title="@string/from_date_label" />
         <Preference
-            android:defaultValue="@string/default_date"
+            android:defaultValue="@string/default_date_start"
             android:inputType="date"
             android:key="@string/to_date_key"
             android:label="@string/to_date_label"
             android:selectAllOnFocus="true"
-            android:title="@string/to_date_label"
-            android:selectable="true" />
+            android:selectable="true"
+            android:summary="@string/default_date_start"
+            android:title="@string/to_date_label" />
     </PreferenceCategory>
 </PreferenceScreen>

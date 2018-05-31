@@ -85,12 +85,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         uriBuilder.appendQueryParameter("page-size", newsNumber);
 
         // Check if a user picked dates. If not, do not add them to query.
-        String dateFrom = sharedPreferences.getString(getString(R.string.from_date_key), getString(R.string.default_date));
-        if (!(dateFrom.equals(getString(R.string.default_date)))) {
+        String dateFrom = sharedPreferences.getString(getString(R.string.from_date_key), getString(R.string.default_date_start));
+        if (!(dateFrom.equals(getString(R.string.default_date_start)))) {
             uriBuilder.appendQueryParameter("from-date", dateFrom);
         }
-        String dateTo = sharedPreferences.getString(getString(R.string.to_date_key), getString(R.string.default_date));
-        if (!(dateTo.equals(getString(R.string.default_date)))) {
+        String dateTo = sharedPreferences.getString(getString(R.string.to_date_key), getString(R.string.default_date_start));
+        if (!(dateTo.equals(getString(R.string.default_date_start)))) {
             uriBuilder.appendQueryParameter("to-date", dateTo);
         }
 
@@ -152,5 +152,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
             startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+    // Delete dates from preferences when a user goes back to settings.
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove(getString(R.string.from_date_key)).apply();
+            editor.remove(getString(R.string.to_date_key)).apply();
     }
 }

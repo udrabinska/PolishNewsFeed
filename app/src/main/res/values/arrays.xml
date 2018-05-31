@@ -8,6 +8,11 @@
         <item>@string/to_date_key</item>
     </string-array>
 
+    <string-array name="dates_keys">
+        <item>@string/from_date_key</item>
+        <item>@string/to_date_key</item>
+    </string-array>
+
     <string-array name="section_keys">
         <item>@string/art_design_key</item>
         <item>@string/books_key</item>

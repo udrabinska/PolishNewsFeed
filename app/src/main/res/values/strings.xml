@@ -5,9 +5,10 @@
     <string name="image_description">article\'s thumbnail</string>
     <string name="no_internet">No internet connection. I cannot load news.</string>
     <string name="image_no_wifi">No wifi signal.</string>
-    <string name="no_news">No news found. \n\n1. Haven\'t you accidentally unchecked all the categories?
-        \n\n2. If not, check internet connection and run the app again.
-        \n\n 3. Still nothing? Wait until Guardian server works.</string>
+    <string name="no_news">No news found. \n\n1. Don\'t fool around with dates! "To" must be later than "from".
+        \n\n2. Haven\'t you accidentally unchecked all the categories?
+        \n\n3. If not, check internet connection and run the app again.
+        \n\n4. Still nothing? Wait until Guardian server works.</string>
     <string name="settings">Settings</string>
     <string name="settings_title">News Settings</string>
     <string name="news_number_default">20</string>
@@ -59,11 +60,11 @@
     <string name="travel_label">Travel</string>
     <string name="travel_key" translatable="false">travel</string>
     <string name="comma">&#44;</string>
-    <string name="show_news_from_day">Show news published:</string>
+    <string name="show_news_from_day">Search for news by date</string>
     <string name="from_date_key">from-date</string>
     <string name="from_date_label">from</string>
     <string name="to_date_key">to-date</string>
     <string name="to_date_label">to</string>
-    <string name="default_date">2000-01-01</string>
+    <string name="default_date_start" translatable="false">1999-01-15</string>
     <string name="date_format">yyyy-MM-dd</string>
 </resources>
