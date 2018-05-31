@@ -175,13 +175,17 @@ public final class QueryUtils {
 
             String imageUrl = fields.optString("thumbnail");
             Drawable image = null;
-            try {
-                Bitmap bitmap = getBitmapFromURL(imageUrl);
-                image = new BitmapDrawable(Resources.getSystem(), bitmap);
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
+            if (imageUrl.equals("")) {
+                newsList.add(new News(title, author, date, section, trailer, url, backgroundColor));
+            } else {
+                try {
+                    Bitmap bitmap = getBitmapFromURL(imageUrl);
+                    image = new BitmapDrawable(Resources.getSystem(), bitmap);
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Problem with getting bitmap from URL.", e);
+                }
+                newsList.add(new News(title, author, date, section, trailer, url, image, backgroundColor));
             }
-            newsList.add(new News(title, author, date, section, trailer, url, image, backgroundColor));
         }
     }
     private static Bitmap getBitmapFromURL(String imageUrl) throws IOException {
@@ -227,6 +231,9 @@ public final class QueryUtils {
         }
         if (author.contains(" in ")) {
             String[] cutAuthor = author.split(" in ");
+            author = cutAuthor[0];
+        } else if (author.contains(", ")) {
+            String[] cutAuthor = author.split(", ");
             author = cutAuthor[0];
         }
         return author;

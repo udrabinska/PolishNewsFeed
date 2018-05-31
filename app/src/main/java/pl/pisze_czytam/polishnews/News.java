@@ -9,7 +9,8 @@ public class News {
     private String section;
     private String trailer;
     private String url;
-    private Drawable image;
+    private static final Drawable NO_IMAGE_PROVIDED = null;
+    private Drawable image = null;
     private int colorBackground;
 
     public News(String title, String author, String date, String section, String trailer, String url, Drawable image, int colorBackground) {
@@ -20,6 +21,16 @@ public class News {
         this.trailer = trailer;
         this.url = url;
         this.image = image;
+        this.colorBackground = colorBackground;
+    }
+
+    public News(String title, String author, String date, String section, String trailer, String url, int colorBackground) {
+        this.title = title;
+        this.author = author;
+        this.date = date;
+        this.section = section;
+        this.trailer = trailer;
+        this.url = url;
         this.colorBackground = colorBackground;
     }
 
@@ -46,5 +57,12 @@ public class News {
     }
     public int getColorBackground() {
         return colorBackground;
+    }
+
+    /**
+     * Returns whether or not there is an image for this news.
+     */
+    public boolean hasImage() {
+        return image != NO_IMAGE_PROVIDED;
     }
 }

@@ -57,6 +57,12 @@ public class NewsAdapter extends ArrayAdapter<News> {
         holder.trailer.setText(currentNews.getTrailer());
         holder.newsContainer.setBackgroundColor(currentNews.getColorBackground());
 
+        if (currentNews.hasImage()) {
+            holder.image.setImageDrawable(currentNews.getImage());
+            holder.image.setVisibility(View.VISIBLE);
+        } else {
+            holder.image.setVisibility(View.GONE);
+        }
         return newsItem;
     }
 }
