@@ -66,4 +66,20 @@
     <string name="to_date_label">to</string>
     <string name="default_date_start" translatable="false">1999-01-15</string>
     <string name="date_format">yyyy-MM-dd</string>
+    <string name="about_app">About Polish News</string>
+    <string name="app_info_title">Polish News Feed from &#8220;The Guardian&#8221;</string>
+    <string name="app_info_main">&#8212;is an app with the latest Polish news from one of the biggest British newspaper.
+        It\'s the 7th project in Google Developer Android Basics Nanodegree Scholarship 2018.
+        \n\nChoose news by category or by time of publishing and know more! Switch on the most popular articles
+        – the best news about Poles and Poland chosen by Guardian journalists – and do not miss
+        them anymore. They will be displayed independently of your chosen categories or time.</string>
+    <string name="app_learn_more">Learn more about the project</string>
+    <string name="app_repo_info">The whole code was written by an aspiring Junior Android Developer
+        Ula Drabińska. There are still a few things to improve, but if you would like to see how it
+        all was done, check my repositories (for this app and others) on GitHub:</string>
+    <string name="app_repo_www" translatable="false">github.com/eovka</string>
+    <string name="repo_full_address">https://github.com/eovka/PolishNewsFeed</string>
+    <string name="write_author">Or&#8230; write to me directly:</string>
+    <string name="email_address">u.drabinska@gmail.com</string>
+    <string name="email_title">Hi! I like your News Feed app :)</string>
 </resources>

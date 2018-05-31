@@ -30,5 +30,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NewsActivity" />
         </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about_app"
+            android:parentActivityName=".NewsActivity"
+            android:screenOrientation="portrait">
+            <!-- Parent activity meta-data to support 4.0 and lower (since minSDK is 17) -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NewsActivity" />
+        </activity>
     </application>
 </manifest>

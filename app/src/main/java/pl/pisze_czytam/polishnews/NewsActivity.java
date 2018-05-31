@@ -123,7 +123,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {
         emptyView.setText(R.string.no_news);
-        emptyView.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.scan_wifi), null, null);
+        emptyView.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.announcement), null, null);
         newsAdapter.clear();
 
         if (newsList != null && !newsList.isEmpty()) {
@@ -156,8 +156,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+        switch (itemId) {
+            case R.id.menu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            case R.id.about_item:
+                startActivity(new Intent(this, AboutActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
