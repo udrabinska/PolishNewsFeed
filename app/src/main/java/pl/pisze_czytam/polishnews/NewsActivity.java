@@ -54,7 +54,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         PreferenceManager.setDefaultValues(this, R.xml.settings_fragment, false);
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected) {
@@ -108,19 +107,18 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         StringBuilder addToQuery = new StringBuilder();
         String prefix = "-";
         for (String section : sectionsToExclude) {
-                addToQuery.append(prefix);
-                addToQuery.append(section);
-                prefix = ",-";
+            addToQuery.append(prefix);
+            addToQuery.append(section);
+            prefix = ",-";
         }
-            String queryWithSections = addToQuery.toString();
-            if (!queryWithSections.equals("")) {
-                uriBuilder.appendQueryParameter("section", queryWithSections);
-            }
-
-            uriBuilder.appendQueryParameter("api-key", apiKey);
-
-            return new NewsLoader(this, uriBuilder.toString());
+        String queryWithSections = addToQuery.toString();
+        if (!queryWithSections.equals("")) {
+            uriBuilder.appendQueryParameter("section", queryWithSections);
         }
+
+        uriBuilder.appendQueryParameter("api-key", apiKey);
+        return new NewsLoader(this, uriBuilder.toString());
+    }
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> newsList) {
@@ -132,6 +130,16 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
             newsAdapter.addAll(newsList);
         }
         progressBar.setVisibility(View.GONE);
+
+        // Check if connected, when app comes into foreground again - to show right info.
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if (!isConnected) {
+            progressBar.setVisibility(View.GONE);
+            emptyView.setText(R.string.no_internet);
+            emptyView.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.wifi_off), null, null);
+        }
     }
 
     @Override
@@ -153,13 +161,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         }
         return super.onOptionsItemSelected(item);
     }
+
     // Delete dates from preferences when a user goes back to settings.
     @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove(getString(R.string.from_date_key)).apply();
-            editor.remove(getString(R.string.to_date_key)).apply();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(getString(R.string.from_date_key)).apply();
+        editor.remove(getString(R.string.to_date_key)).apply();
     }
 }
