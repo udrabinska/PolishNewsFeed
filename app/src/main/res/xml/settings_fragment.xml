@@ -21,8 +21,7 @@
         android:entryValues="@array/section_keys"
         android:key="@string/check_sections_key"
         android:title="@string/check_sections" />
-    <PreferenceCategory android:title="@string/show_news_from_day"
-        android:textAppearance="?android:attr/textAppearanceLarge">
+    <PreferenceCategory android:title="@string/show_news_from_day" >
         <Preference
             android:inputType="date"
             android:key="@string/from_date_key"

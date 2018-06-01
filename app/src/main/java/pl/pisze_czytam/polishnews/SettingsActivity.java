@@ -14,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.DatePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -102,7 +105,22 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (!(preference instanceof MultiSelectListPreference)) {
+            if (preference instanceof MultiSelectListPreference) {
+                MultiSelectListPreference checkboxPreferences = (MultiSelectListPreference) preference;
+                CharSequence[] sequence = checkboxPreferences.getEntries();
+
+                StringBuilder builder = new StringBuilder();
+                for (String checkbox : (HashSet<String>) newValue){
+                    int index = checkboxPreferences.findIndexOfValue(checkbox);
+                    if (index >= 0) {
+                        if (builder.length() != 0) {
+                            builder.append(", ");
+                        }
+                        builder.append(sequence[index]);
+                    }
+                }
+                preference.setSummary(builder);
+            } else {
                 String stringValue = newValue.toString();
                 preference.setSummary(stringValue);
             }

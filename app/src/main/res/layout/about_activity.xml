@@ -15,24 +15,24 @@
             style="@style/textStyle"
             android:text="@string/app_info_title"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/biggest_text"
+            android:textSize="@dimen/title_text"
             android:textStyle="bold" />
 
         <TextView
             style="@style/textStyle"
             android:text="@string/app_info_main"
-            android:textSize="@dimen/title_text" />
+            android:textSize="@dimen/lead_text" />
 
         <TextView
             style="@style/textStyle"
             android:text="@string/app_learn_more"
-            android:textSize="@dimen/biggest_text"
+            android:textSize="@dimen/title_text"
             android:textStyle="bold" />
 
         <TextView
             style="@style/textStyle"
             android:text="@string/app_repo_info"
-            android:textSize="@dimen/title_text" />
+            android:textSize="@dimen/lead_text" />
 
         <TextView
             android:id="@+id/github_address"
@@ -41,13 +41,13 @@
             android:padding="@dimen/standard_padding"
             android:text="@string/app_repo_www"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/biggest_text"
+            android:textSize="@dimen/title_text"
             android:textStyle="bold" />
 
         <TextView
             style="@style/textStyle"
             android:text="@string/write_author"
-            android:textSize="@dimen/title_text" />
+            android:textSize="@dimen/lead_text" />
 
         <TextView
             android:id="@+id/email_address"
@@ -56,7 +56,7 @@
             android:padding="@dimen/standard_padding"
             android:text="@string/email_address"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/biggest_text"
+            android:textSize="@dimen/title_text"
             android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>
