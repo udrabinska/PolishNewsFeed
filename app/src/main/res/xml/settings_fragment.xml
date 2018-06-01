@@ -15,14 +15,17 @@
         android:summaryOn="@string/lead_content_checked"
         android:title="@string/lead_content_label" />
 
-    <MultiSelectListPreference
+    <pl.pisze_czytam.polishnews.MyMultiSelectListPreference
         android:defaultValue="@array/section_keys"
         android:entries="@array/sections_label"
         android:entryValues="@array/section_keys"
         android:key="@string/check_sections_key"
+        android:summary="%s"
         android:title="@string/check_sections" />
-    <PreferenceCategory android:title="@string/show_news_from_day"
-        android:textAppearance="?android:attr/textAppearanceLarge">
+
+    <PreferenceCategory
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:title="@string/show_news_from_day">
         <Preference
             android:inputType="date"
             android:key="@string/from_date_key"

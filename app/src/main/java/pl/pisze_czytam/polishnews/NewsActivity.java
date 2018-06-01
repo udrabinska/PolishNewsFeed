@@ -48,7 +48,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         newsAdapter = new NewsAdapter(this, R.layout.news_activity, new ArrayList<News>());
         newsList.setAdapter(newsAdapter);
 
-        // Check if preference is switched on - to know, if leadContent should be loaded too.
+        // Check if preference "add most popular" is switched on - to know, if leadContent should be loaded too.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         leadContentChecked = sharedPreferences.getBoolean(getString(R.string.lead_content_key), true);
         PreferenceManager.setDefaultValues(this, R.xml.settings_fragment, false);
@@ -166,7 +166,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         return super.onOptionsItemSelected(item);
     }
 
-    // Delete dates from preferences when a user goes back to settings.
+    // Delete dates from preferences when a user leaves the news feed (ex. goes back to settings).
     @Override
     protected void onPause() {
         super.onPause();

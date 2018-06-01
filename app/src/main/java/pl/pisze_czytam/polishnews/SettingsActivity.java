@@ -4,19 +4,28 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static pl.pisze_czytam.polishnews.NewsActivity.leadContentChecked;
 
@@ -91,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (preference instanceof SwitchPreference) {
                 leadContentChecked = sharedPreferences.getBoolean(preference.getKey(), true);
                 onPreferenceChange(preference, leadContentChecked);
-            } else if (preference instanceof MultiSelectListPreference) {
+            } else if (preference instanceof MyMultiSelectListPreference) {
                 Object value = sharedPreferences.getStringSet(preference.getKey(), new HashSet<String>());
                 onPreferenceChange(preference, value);
             } else {
@@ -102,9 +111,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (!(preference instanceof MultiSelectListPreference)) {
+            if (!(preference instanceof MyMultiSelectListPreference)) {
                 String stringValue = newValue.toString();
                 preference.setSummary(stringValue);
+            } else {
+                CharSequence summary = preference.getSummary();
+                preference.setSummary(summary.toString());
             }
             return true;
         }

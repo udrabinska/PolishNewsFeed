@@ -3,7 +3,6 @@
     <dimen name="divider_height">1dp</dimen>
     <dimen name="smaller_padding">8dp</dimen>
     <dimen name="standard_padding">16dp</dimen>
-    <dimen name="wifi_image">100dp</dimen>
     <dimen name="image_size">150dp</dimen>
     <dimen name="smaller_texts">12sp</dimen>
     <dimen name="lead_text">14sp</dimen>

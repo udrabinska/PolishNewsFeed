@@ -1,5 +1,5 @@
 /* Class created to get custom color from resources in static QueryUtils
- * - not one of the android colors. I cannot find better way so far. **/
+ * - not one of the android colors. I cannot find better way so far. */
 
 package pl.pisze_czytam.polishnews;
 

@@ -4,7 +4,6 @@
     <string name="divider">&#160;&#160;||&#160;&#160;</string>
     <string name="image_description">article\'s thumbnail</string>
     <string name="no_internet">No internet connection. I cannot load news.</string>
-    <string name="image_no_wifi">No wifi signal.</string>
     <string name="no_news">No news found. \n\n1. Don\'t fool around with dates! &#8220;To&#8221; must be later than &#8220;from&#8221;.
         \n\n2. With categories too &#8212; they like to be checked.
         \n\n3. Still no news? Wait till The Guardian server works again.</string>
@@ -15,12 +14,10 @@
     <string name="news_number_label">Number of news to display</string>
     <string name="lead_content_key" translatable="false">lead_content</string>
     <string name="lead_content_label">Add 10 most popular news?</string>
-    <string name="lead_content_summary">Want to know Guardian\'s most popular?</string>
     <string name="lead_content_checked">Lead news added to recent ones.</string>
     <string name="lead_content_unchecked">Lead news won\'t be shown.</string>
     <string name="check_sections">Check your favourite sections</string>
     <string name="check_sections_key">check_sections</string>
-    <string name="checkboxes_default">true</string>
     <string name="art_design_label">Art and design</string>
     <string name="art_design_key" translatable="false">artanddesign</string>
     <string name="books_label">Books</string>
@@ -58,7 +55,6 @@
     <string name="sport_key" translatable="false">sport</string>
     <string name="travel_label">Travel</string>
     <string name="travel_key" translatable="false">travel</string>
-    <string name="comma">&#44;</string>
     <string name="show_news_from_day">Search news by date</string>
     <string name="from_date_key">from-date</string>
     <string name="from_date_label">from</string>
@@ -68,7 +64,7 @@
     <string name="date_format">yyyy-MM-dd</string>
     <string name="about_app">About Polish News</string>
     <string name="app_info_title">Polish News Feed from &#8220;The Guardian&#8221;</string>
-    <string name="app_info_main">&#8212;is an app with the latest Polish news from one of the biggest British newspaper.
+    <string name="app_info_main">&#8212; is an app with the latest Polish news from one of the biggest British newspaper.
         It\'s the 7th project in Google Developer Android Basics Nanodegree Scholarship 2018.
         \n\nChoose news by category or by time of publishing and know more! Switch on the most popular articles
         – the best news about Poles and Poland chosen by Guardian journalists – and do not miss
